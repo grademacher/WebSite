@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/G-icon.ico">
+
+    <title>Downloads</title>
+
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/downloads.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+
+
+    <div class="container">
+      <header class="header clearfix">
+        <nav>
+          <div class="btn-group float-right" role="group" aria-label="Button group with nested dropdown">
+            <a href="index.html" class="btn btn-primary">Home</a>
+            <a href="https://github.com/grademacher" class="btn btn-primary">GitHub</a>
+            <a href="downloads.html" class="btn btn-primary">Downloads</a>
+
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Orake
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="orake_cmb_calc.html">Combat Calculator</a>
+              </div>
+            </div>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Applets
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="rpg_applet.html">Dungeon Crawler</a>
+                <a class="dropdown-item" href="orake_calc_applet.html">Orake CMB Calculator</a>
+              </div>
+            </div>
+          </div>
+
+        </nav>
+        <h3 class="text-muted">Downloads</h3>
+      </header>
+
+      <main role="main">
+        <div class="row marketing">
+          <div class="col-lg-6">
+            <h4>Résumé</h4>
+            <a href="downloads/resume.pdf" download="Garrett_Rademacher_Resume">
+              <p>Garrett's Résumé</p>
+            </a>
+
+          </div>
+
+          <div class="col-lg-6">
+            <h4>Orake Combat Calculator</h4>
+            <a href="downloads/cbLevelCalc.zip" download="Orake_Combat_Level_Calculator">
+              <p>Combat Level Calculator</p>
+            </a>
+
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="footer">
+        <p>&copy; Rademacher Labs 2017</p>
+        <br>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+
+
+    <script src="js/jquery.js"></script>
+  	<script src="js/jquery.backstretch.js"></script>
+  	<script>
+  	    $.backstretch(["images/downloads_background.png"]);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script>
+    $(document).ready(function () {
+      $('.dropdown-toggle').dropdown();
+    });
+    </script>
+  </body>
+</html>
