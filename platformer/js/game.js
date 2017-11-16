@@ -56,6 +56,7 @@ PlayState.init = function(){
 };
 
 PlayState.update = function(){
+  this._handleCollisions();
   this._handleInput();
 }
 
@@ -67,17 +68,29 @@ PlayState._handleInput = function(){
   }else {
     this.hero.move(0);
   }
-}
+};
+
+PlayState._handleCollisions = function(){
+  this.game.physics.arcade.collide(this.hero, this.platforms);
+};
 
 PlayState._loadLevel = function (data) {
+    this.platforms = this.game.add.group();
     // spawn all platforms
     data.platforms.forEach(this._spawnPlatform, this);
     // spawn hero and enemies
     this._spawnCharacters({hero: data.hero, spiders: data.spiders});
+    //enable gravity
+    const GRAVITY = 1200;
+    this.game.physics.arcade.gravity.y = GRAVITY;
 };
 
 PlayState._spawnPlatform = function (platform) {
-    this.game.add.sprite(platform.x, platform.y, platform.image);
+    let sprite = this.platforms.create(
+      platform.x, platform.y, platform.image);
+    this.game.physics.enable(sprite);
+    sprite.body.allowGravity = false;
+    sprite.body.immovable = true;
 };
 
 PlayState._spawnCharacters = function (data) {
