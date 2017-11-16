@@ -10,6 +10,8 @@ function Hero(game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'hero');
 
     this.anchor.set(0.5, 0.5);
+    this.game.physics.enable(this);
+    this.body.collideWorldBounds = true;
 }
 
 // inherit from Phaser.Sprite
@@ -17,7 +19,8 @@ Hero.prototype = Object.create(Phaser.Sprite.prototype);
 Hero.prototype.constructor = Hero;
 
 Hero.prototype.move = function (direction){
-  this.x += direction * 2.5;
+  const SPEED = 200;
+  this.body.velocity.x = direction * SPEED
 }
 
 // =============================================================================
@@ -61,6 +64,8 @@ PlayState._handleInput = function(){
     this.hero.move(-1);
   }else if (this.keys.right.isDown) {
     this.hero.move(1);
+  }else {
+    this.hero.move(0);
   }
 }
 
