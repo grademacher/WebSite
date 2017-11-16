@@ -17,12 +17,7 @@ PlayState.create = function(){
 }
 
 PlayState._loadLevel = function(data){
-  //spawn the platforms
-  data.platforms.forEach(this._spawnPlatform, this);
-}
 
-PlayState._spawnPlatform = function(platform) {
-  this.game.add.sprite(platform.x, platform.y, platform.image);
 }
 
 window.onload = function (){
