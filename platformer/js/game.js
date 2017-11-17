@@ -49,6 +49,7 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1', 'platformer/images/grass_2x1.png');
     this.game.load.image('grass:1x1', 'platformer/images/grass_1x1.png');
     this.game.load.image('hero', 'platformer/images/hero_stopped.png');
+    this.game.load.spritesheet('coin', 'platformer/images/coin_animated.png', 22, 22);
 };
 
 PlayState.create = function () {
@@ -88,14 +89,18 @@ PlayState._handleInput = function(){
 
 PlayState._handleCollisions = function(){
   this.game.physics.arcade.collide(this.hero, this.platforms);
+  this.game.physics.arcade.overlap(this.hero, this.coins, this._onHeroVsCoin, null, this)
 };
 
 PlayState._loadLevel = function (data) {
     this.platforms = this.game.add.group();
+    this.coins = this.game.add.group();
     // spawn all platforms
     data.platforms.forEach(this._spawnPlatform, this);
     // spawn hero and enemies
     this._spawnCharacters({hero: data.hero, spiders: data.spiders});
+    //spawn important objects
+    data.coins.forEach(this._spawnCoin, this);
     //enable gravity
     const GRAVITY = 1200;
     this.game.physics.arcade.gravity.y = GRAVITY;
@@ -114,6 +119,19 @@ PlayState._spawnCharacters = function (data) {
     this.hero = new Hero(this.game, data.hero.x, data.hero.y);
     this.game.add.existing(this.hero);
 };
+
+PlayState._spawnCoin = function(coin){
+  let sprite = this.coins.create(coin.x, coin.y, 'coin');
+  sprite.anchor.set(0.5, 0.5);
+  sprite.animations.add('rotate', [0, 1, 2, 1], 6, true);
+  sprite.animations.play('rotate');
+  this.game.physics.enable(sprite);
+  sprite.body.allowGravity(false);
+};
+
+PlayState._onHeroVsCoin = function(hero, coin){
+  coin.kill();
+}
 
 
 
