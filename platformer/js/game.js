@@ -34,6 +34,11 @@ Hero.prototype.jump = function () {
   return canJump;
 };
 
+Hero.prototype.bounce = function(){
+  const BOUNCE_SPEED = 200;
+  tis.body.velocity.y = -BOUNCE_SPEED;
+}
+
 //
 // spider sprite
 //
@@ -66,6 +71,12 @@ Spider.prototype.update = function(){
     this.body.velocity.x = Spider.SPEED;//turn right
   }
 }
+
+Spider.prototype.die = function(){
+  this.body.enable = false;
+
+  this.animations.play('die').onComplete.addOnce(function () {this.kill()}, this);
+};
 
 
 
@@ -104,15 +115,14 @@ PlayState.preload = function () {
   this.game.load.image('grass:2x1', 'platformer/images/grass_2x1.png');
   this.game.load.image('grass:1x1', 'platformer/images/grass_1x1.png');
   this.game.load.image('hero', 'platformer/images/hero_stopped.png');
+  this.game.load.image('invisible-wall', 'platformer/images/invisible_wall.png');
 
   this.game.load.spritesheet('coin', 'platformer/images/coin_animated.png', 22, 22);
+  this.game.load.spritesheet('spider', 'platformer/images/spider.png', 42, 32);
 
   this.game.load.audio('sfx:jump', 'platformer/audio/jump.wav');
   this.game.load.audio('sfx:coin', 'platformer/audio/coin.wav');
-
-  this.game.load.spritesheet('spider', 'platformer/images/spider.png', 42, 32);
-
-  this.game.load.image('invisible-wall', 'platformer/images/invisible_wall.png');
+  this.game.load.audio('sfx:stomp', 'platformer/audio/stomp.wav');
 };
 
 PlayState.create = function () {
@@ -120,6 +130,7 @@ PlayState.create = function () {
   this.sfx = {
     jump: this.game.add.audio('sfx:jump'),
     coin: this.game.add.audio('sfx:coin'),
+    stomp: this.game.add.audio('sfx:stomp')
   };
 
   this.game.add.image(0, 0, 'background');
@@ -136,8 +147,9 @@ PlayState._handleCollisions = function () {
   this.game.physics.arcarde.collide(this.spiders, this.enemyWalls);
   this.game.physics.arcade.collide(this.hero, this.platforms);
 
-  this.game.physics.arcade.overlap(this.hero, this.coins, this._onHeroVsCoin,
-                                    null, this);
+  this.game.physics.arcade.overlap(this.hero, this.coins, this._onHeroVsCoin,null, this);
+  this.game.physics.arcade.overlap(this.hero, this.spiders, this._onHeroVsEnemy, null, this);
+
 };
 
 PlayState._handleInput = function () {
@@ -221,6 +233,16 @@ PlayState._spawnEnemyWall = function(x,y,side){
   this.game.physics.enable(sprite);
   sprite.body.immovable = true;
   sprite.body.allowGravity = false;
+};
+
+PlayState._onHeroVsEnemy = function(hero, enemy){
+  if(hero.body.velocity.y > 0){
+    hero.bounce();
+    enemy.die();
+  }else {
+    this.sfx.stomp.play();
+    this.game.state.restart();
+  }
 };
 
 // =============================================================================
