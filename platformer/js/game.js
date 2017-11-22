@@ -12,6 +12,12 @@ function Hero(game, x, y) {
     // physic properties
     this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
+
+    //animations
+    this.animations.add('stop', [0]);
+    this.animations.add('run', [1, 2], 8, true);
+    this.animations.add('jump', [3]);
+    this.animations.add('fall', [4]);
 }
 
 // inherit from Phaser.Sprite
@@ -21,6 +27,38 @@ Hero.prototype.constructor = Hero;
 Hero.prototype.move = function (direction) {
     const SPEED = 200;
     this.body.velocity.x = direction * SPEED;
+
+    //make sure the character is facing the right direction
+    if (this.body.velocity.x < 0) {
+      this.scale.x = -1;
+    }else if (this.body.velocity.x > 0) {
+      this.scale.x = 1;
+    }
+};
+
+Hero.prototype._getAnimationName = function(){
+  let name = 'stop'; //default animation
+
+  //jumping
+  if (this.body.velocity.y < 0) {
+    name = 'jump';
+  }else if (this.body.velocity.y >= 0 && !this.body.touching.down) {
+    name = 'fall';
+  }else if (this.body.velocity.x !== 0 && this.body.touching.down) {
+    name = 'run';
+  }
+
+  return name;
+};
+
+Hero.prototype.update = function () {
+  //update the sprite animation
+  let animationName = this._getAnimationName();
+  if (this.animations.name !== animationName) {
+    this.animations.play(animationName);
+  }
+};
+
 };
 
 Hero.prototype.jump = function () {
@@ -120,9 +158,9 @@ PlayState.preload = function () {
     this.game.load.image('grass:4x1', 'platformer/images/grass_4x1.png');
     this.game.load.image('grass:2x1', 'platformer/images/grass_2x1.png');
     this.game.load.image('grass:1x1', 'platformer/images/grass_1x1.png');
-    this.game.load.image('hero', 'platformer/images/hero_stopped.png');
     this.game.load.image('invisible-wall', 'platformer/images/invisible_wall.png');
     this.game.load.image('icon:coin', 'platformer/images/coin_icon.png');
+    this.game.load.spritesheet('hero', 'platformer/images/hero.png', 36, 42);
 
     this.game.load.spritesheet('coin', 'platformer/images/coin_animated.png', 22, 22);
     this.game.load.spritesheet('spider', 'platformer/images/spider.png', 42, 32);
