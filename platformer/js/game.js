@@ -203,10 +203,10 @@ PlayState._spawnPlatform = function (platform) {
 };
 
 PlayState._spawnCharacters = function (data) {
-  //spawn spideres
-  data.spiders.forEach(function(spider)){
-    let sprite = new SPider(this.game, spider.x, spider.y);
-    this.spiders.add(sprite);
+  // spawn spiders
+  data.spiders.forEach(function (spider) {
+      let sprite = new Spider(this.game, spider.x, spider.y);
+      this.spiders.add(sprite);
   }, this);
   // spawn hero
   this.hero = new Hero(this.game, data.hero.x, data.hero.y);
