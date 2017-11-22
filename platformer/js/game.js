@@ -59,8 +59,6 @@ Hero.prototype.update = function () {
   }
 };
 
-};
-
 Hero.prototype.jump = function () {
     const JUMP_SPEED = 600;
     let canJump = this.body.touching.down;
