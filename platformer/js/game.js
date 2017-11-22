@@ -177,8 +177,8 @@ PlayState.preload = function () {
 PlayState.create = function () {
     // create sound entities
     this.sfx = {
-        key: this.game.add.audio('sfx:key');
-        door: this.game.add.audio('sfx:door');
+        key: this.game.add.audio('sfx:key'),
+        door: this.game.add.audio('sfx:door'),
         jump: this.game.add.audio('sfx:jump'),
         coin: this.game.add.audio('sfx:coin'),
         stomp: this.game.add.audio('sfx:stomp')
